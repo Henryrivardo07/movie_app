@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { Movie } from "../../types";
+import { baseUrl } from "@/constant/movie";
+import Image from "next/image";
+import { FaPlay } from "react-icons/fa";
+import { HiInformationCircle } from "react-icons/hi";
 
 export type BannerProps = {
   netflixOriginals: Movie[];
@@ -20,17 +24,24 @@ const Banner: React.FC<BannerProps> = ({ netflixOriginals }) => {
   console.log(movie);
 
   return (
-    <div className="relative">
+    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12  ">
       {/* Banner Image */}
-      <div className="relative">
-        {movie && <img className="w-full h-[400px] object-cover" src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} alt={movie.name} />}
-        {/* Optional: Add some overlay or text */}
-        {movie && (
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black via-transparent to-black text-white p-4">
-            <h1 className="text-3xl font-bold">{movie.name}</h1>
-            <p className="mt-2">{movie.overview}</p>
-          </div>
-        )}
+      <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">{movie && <Image src={`${baseUrl}${movie.backdrop_path}`} alt={movie.name} layout="fill" objectFit="cover" priority />}</div>
+
+      {/* Banner Text and Buttons */}
+
+      <div className=" ">
+        <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl">{movie?.title || movie?.name || movie?.original_name}</h1>
+        <p className="max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">{movie?.overview}</p>
+
+        <div className="flex space-x-3 mt-4 md:mt-6 lg:mt-8">
+          <button className="bannerButton bg-white text-black">
+            <FaPlay className="h-4 w-4 text-black md:h-7 md:w-7" /> Play
+          </button>
+          <button className="bannerButton bg-[gray]/70">
+            <HiInformationCircle className="h-5 w-5 md:h-8 md:w-8" /> More Info
+          </button>
+        </div>
       </div>
     </div>
   );
