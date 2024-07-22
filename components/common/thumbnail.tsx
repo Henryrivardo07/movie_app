@@ -5,7 +5,7 @@ import { baseUrl } from "@/constant/movie";
 
 interface Props {
   // kalo gunakana firebase
-  // movie: Movie || documentData;
+  // movie: Movie || documentData[];
   movie: Movie;
 }
 const Thumbnail = ({ movie }: Props) => {
